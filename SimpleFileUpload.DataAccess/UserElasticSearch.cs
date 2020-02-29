@@ -1,9 +1,6 @@
 ﻿using Nest;
-using SimpleFileUpload.DataAccess;
 using SimpleFileUpload.Entity;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SimpleFileUpload.DataAccess
 {
@@ -13,7 +10,7 @@ namespace SimpleFileUpload.DataAccess
 		{
 		}
 
-		public IEnumerable<UserModel> FilterByName(int pageNumber, int pageSize, string filter)
+		public IEnumerable<UserModel> FilterByName(int pageNumber, int pageSize, string filter, out long totalRecords)
 		{
 			int startIndex = (pageNumber - 1) * pageSize;
 
@@ -31,12 +28,10 @@ namespace SimpleFileUpload.DataAccess
 							)
 							.From(startIndex)
 							.Size(pageSize));
-
+			totalRecords = ExtractTotalRecords();
 			return response.Documents;
-
 		}
-
-		public IEnumerable<UserModel> FilterByPhone(int pageNumber, int pageSize, string filter)
+		public IEnumerable<UserModel> FilterByPhone(int pageNumber, int pageSize, string filter, out long totalRecords)
 		{
 			int startIndex = (pageNumber - 1) * pageSize;
 
@@ -55,8 +50,13 @@ namespace SimpleFileUpload.DataAccess
 							.From(startIndex)
 							.Size(pageSize));
 
+			totalRecords = ExtractTotalRecords();
 			return response.Documents;
+		}
 
+		private long ExtractTotalRecords()
+		{
+			return ElasticClient.Count<UserModel>().Count;
 		}
 	}
 }

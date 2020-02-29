@@ -1,4 +1,5 @@
-﻿using SimpleFileUpload.Core;
+﻿using Elasticsearch.Net;
+using SimpleFileUpload.Core;
 using SimpleFileUpload.DataAccess;
 using SimpleFileUpload.Entity;
 using SimpleFileUpload.Message;
@@ -10,18 +11,39 @@ using System.Threading.Tasks;
 
 namespace SimpleFileUpload.AppLayer
 {
-	public class UserAppLayer
+	public static class UserAppLayer
 	{
-		private static UserElasticSearch UserRepository = new UserElasticSearch();
+		private static readonly UserElasticSearch UserRepository = new UserElasticSearch();
+		private static readonly UserFileOperations UserFileOperations = new UserFileOperations();
 
 		public static BaseResponse FilterByName(UserFilterByNameRequest request)
 		{
-			return new BaseResponse { Data = UserRepository.FilterByName(request.PageNumber, request.PageSize, request.Filter/* "Kaley"*/) };
+			var items = UserRepository.FilterByName(request.PageNumber, request.PageSize, request.Filter, out long totalRecords);
+			return new GridResponse<UserModel>
+			{
+				Data = new GridResult<UserModel>
+				{
+					Items = items,
+					PageNumber = request.PageNumber,
+					PageSize = request.PageSize,
+					TotalRecords = totalRecords
+				}
+			};
 		}
 
 		public static BaseResponse FilterByPhone(UserFilterByPhoneRequest request)
 		{
-			return new BaseResponse { Data = UserRepository.FilterByPhone(request.PageNumber, request.PageSize, request.Filter/*"1-666"*/) };
+			var items = UserRepository.FilterByPhone(request.PageNumber, request.PageSize, request.Filter, out long totalRecords);
+			return new GridResponse<UserModel>
+			{
+				Data = new GridResult<UserModel>
+				{
+					Items = items,
+					PageNumber = request.PageNumber,
+					PageSize = request.PageSize,
+					TotalRecords = totalRecords
+				}
+			};
 		}
 
 		public static void SaveUsers(string path)
@@ -30,9 +52,13 @@ namespace SimpleFileUpload.AppLayer
 			var items = ExtractUserListFromExcel(excelData);
 			try
 			{
-				new UserElasticSearch().IndexBulk(items);
+				if (!UserRepository.IndexBulk(items, out ServerError error))
+				{
+					throw new Exception(error.Error.Reason);
+				}
+				UserFileOperations.SaveAsync(items);
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
 				throw;
 			}

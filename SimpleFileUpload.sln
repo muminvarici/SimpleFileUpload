@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1000
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileUpload", "SimpleFileUpload\SimpleFileUpload.csproj", "{3C51644C-904E-4F3F-8315-E70D564EDB18}"
 EndProject
@@ -11,9 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileUpload.Message", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileUpload.AppLayer", "SimpleFileUpload.AppLayer\SimpleFileUpload.AppLayer.csproj", "{BBC50417-A5B9-4593-9716-142DEA7BC164}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFileUpload.Core", "SimpleFileUpload.Core\SimpleFileUpload.Core.csproj", "{CA32E2B0-6633-4FC6-B432-29132751A3B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileUpload.Core", "SimpleFileUpload.Core\SimpleFileUpload.Core.csproj", "{CA32E2B0-6633-4FC6-B432-29132751A3B7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleFileUpload.DataAccess", "SimpleFileUpload.DataAccess\SimpleFileUpload.DataAccess.csproj", "{771C9C9D-C195-478A-AA2C-77A338B61A99}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AAB3E0A0-C4CF-43F5-AEFC-932BDCD6CC4D}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,8 +1,8 @@
-﻿using Nest;
+﻿using Elasticsearch.Net;
+using Nest;
 using SimpleFileUpload.Entity;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace SimpleFileUpload.DataAccess
 {
@@ -22,7 +22,7 @@ namespace SimpleFileUpload.DataAccess
 		//	ElasticClient.exists
 		//}
 
-		public virtual void Index(T item, string indexName)
+		public virtual bool Index(T item, string indexName)
 		{
 			//var status = ElasticClient.Index<T>(item, indexDescriptor =>
 			//{
@@ -31,9 +31,10 @@ namespace SimpleFileUpload.DataAccess
 			//	return indexDescriptor;
 			//});
 			var response = ElasticClient.IndexDocument<T>(item);
+			return response.IsValid;
 		}
 
-		public virtual void IndexBulk(IEnumerable<T> items)
+		public virtual bool IndexBulk(IEnumerable<T> items, out ServerError error)
 		{
 			var response = ElasticClient.IndexMany(items, IndexName);
 			//var descriptor = new BulkDescriptor();
@@ -42,6 +43,8 @@ namespace SimpleFileUpload.DataAccess
 			//	descriptor.Index<T>(op => op.Document(item));
 			//}
 			//var result = ElasticClient.Bulk(descriptor);
+			error = response.ServerError;
+			return response.IsValid;
 		}
 
 		public virtual T Find(int id)
@@ -60,7 +63,7 @@ namespace SimpleFileUpload.DataAccess
 			var response = ElasticClient.Search<T>(s => s
 					.Index(IndexName)
 					.From(0)
-					.Size(Convert.ToInt32(count)/40)
+					.Size(Convert.ToInt32(count) / 40)
 					.MatchAll()
 					);
 			return response.Documents;

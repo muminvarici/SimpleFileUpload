@@ -16,21 +16,32 @@
 </div>
 
 
-<div>
-	<table>
-		<tr dir-paginate="user in $ctrl.list | itemsPerPage: usersPerPage" total-items="totalUsers" current-page="pagination.current">
-			<td>{{ user.Name }}</td>
-			<!--<td>{{ user.email }}</td>-->
+<server-side-table title="'User List'"
+				   items="$ctrl.list"
+				   headers="$ctrl.headers" 
+				   properties="$ctrl.properties"
+				   recordCount="$ctrl.totalRecords"></server-side-table>
+
+<!--<table class="table">
+	<caption>List of users</caption>
+	<thead>
+		<tr>
+			<th scope="col">Id</th>
+			<th scope="col">Name</th>
+			<th scope="col">Surname</th>
+			<th scope="col">Mobile No</th>
+			<th scope="col">Birth Date</th>
+			<th scope="col">Last Location</th>
 		</tr>
-	</table>
-
-	<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
-</div>
-
-<hr>
-<div ng-repeat="item in $ctrl.list">
-	{{item|json}}
-	<button ng-click="$ctrl.delete()">Delete</button>
-</div>
-
-
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in $ctrl.list">
+			<td>{{item.id}}</td>
+			<td>{{item.name}}</td>
+			<td>{{item.surname}}</td>
+			<td>{{item.mobileNo}}</td>
+			<td>{{item.birthDate}}</td>
+			<td>{{item.lastLocation}}</td>
+		</tr>
+	</tbody>
+</table>-->

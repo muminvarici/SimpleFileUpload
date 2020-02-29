@@ -1,0 +1,33 @@
+﻿<!--{{$ctrl.recordCount}}x-->
+
+<nav aria-label="table navigation">
+	<ul class="pagination justify-content-end">
+		<li class="page-item disabled">
+			<a class="page-link" href="#" tabindex="-1">Total Records {{$ctrl.recordCount}}</a>
+		</li>
+		<li class="page-item disabled">
+			<a class="page-link" href="#" tabindex="-1">Previous</a>
+		</li>
+		<li class="page-item"><a class="page-link" href="#">1</a></li>
+		<li class="page-item"><a class="page-link" href="#">2</a></li>
+		<li class="page-item"><a class="page-link" href="#">3</a></li>
+		<li class="page-item">
+			<a class="page-link" href="#">Next</a>
+		</li>
+	</ul>
+</nav>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th ng-repeat="header in $ctrl.headers" scope="col">{{header}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="item in $ctrl.items">
+			<td ng-repeat="property in $ctrl.properties">
+				{{item[property]}}
+			</td>
+		</tr>
+	</tbody>
+</table>

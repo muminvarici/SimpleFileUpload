@@ -19,7 +19,6 @@ namespace SimpleFileUpload.Controllers
 
 			long size = files.Sum(f => f.Length);
 			string filePath = null;
-			var startDate = DateTime.Now;
 			foreach (var formFile in files)
 			{
 				if (formFile.Length > 0)
@@ -33,10 +32,6 @@ namespace SimpleFileUpload.Controllers
 					UserAppLayer.SaveUsers(filePath);
 				}
 			}
-
-			int waitDuration = 3000 - (int)(DateTime.Now - startDate).TotalMilliseconds;
-			waitDuration = Math.Min(3000, waitDuration);
-			Thread.Sleep(waitDuration);
 
 			// Process uploaded files
 			// Don't rely on or trust the FileName property without validation.
