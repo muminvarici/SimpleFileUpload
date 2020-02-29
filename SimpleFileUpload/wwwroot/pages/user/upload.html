@@ -1,0 +1,23 @@
+﻿<form name="myForm">
+	<div class="form-group">
+		<label for="fileUploadControl">Please select an excel file to upload</label>
+
+		<input class="form-control-file" id="fileUploadControl"
+			   type="file" ngf-select ng-model="excelFile" name="file"
+			   accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+			   ngf-max-size="100MB" required
+			   ngf-model-invalid="errorFile">
+
+		<i ng-show="myForm.file.$error.required">*required</i><br>
+
+		<button class="btn btn-danger" ng-click="excelFile = null" ng-show="excelFile && !$ctrl.uploading">Remove</button>
+		<button ng-click="$ctrl.uploadFile(excelFile)" class="btn btn-info" ng-disabled="!myForm.$valid" ng-show="!$ctrl.uploading">Upload File</button>
+		<br>
+
+		<span ng-show="excelFile.completed">Upload Successful</span>
+		<span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+	</div>
+
+
+	<spinner ng-show="$ctrl.uploading"></spinner>
+</form>

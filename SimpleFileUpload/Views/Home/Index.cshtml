@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html ng-app="app" lang="en">
+<head>
+	<title>Bootstrap Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="~/css/StyleSheet.css" rel="stylesheet" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://unpkg.com/popper.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+	<script src="https://code.angularjs.org/1.7.9/angular.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.25/angular-ui-router.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload-shim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js"></script>
+
+	<script src="~/js/simpleFileUploadApp.js"></script>
+	<script src="~/js/directives/spinner.js"></script>
+	<script src="~/js/factories/apiRequestFactory.js"></script>
+	<script src="~/js/factories/userElasticSearchFactory.js"></script>
+
+
+	<script src="~/pages/user/list.js"></script>
+	<script src="~/pages/user/upload.js"></script>
+</head>
+<body>
+	<div class="row" style="margin:30px;">
+		<div class="col-sm-3">
+			<h3>Main Menu</h3>
+			<ul class="list-group">
+				<li class="list-group-item"><a ui-sref="User">User Module</a></li>
+				@*<li class="list-group-item"><a ui-sref="User.Upload">Upload User List</a></li>*@
+			</ul>
+		</div>
+		<div class="col-sm-9">
+			<div ui-view="container-view"></div>
+		</div>
+	</div>
+</body>
+</html>

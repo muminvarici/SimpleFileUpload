@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleFileUpload.Core\SimpleFileUpload.Core.csproj" />
+    <ProjectReference Include="..\SimpleFileUpload.DataAccess\SimpleFileUpload.DataAccess.csproj" />
+    <ProjectReference Include="..\SimpleFileUpload.Entity\SimpleFileUpload.Entity.csproj" />
+    <ProjectReference Include="..\SimpleFileUpload.Message\SimpleFileUpload.Message.csproj" />
+  </ItemGroup>
+
+</Project>

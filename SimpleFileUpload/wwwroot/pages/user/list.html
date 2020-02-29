@@ -1,0 +1,36 @@
+﻿<!--<button type="button" class="btn btn-primary btn-lg" ng-click="$ctrl.setFilterByText()">Filter By {{$ctrl.filterBy}}</button>-->
+<br />
+<div class="row">
+	<div class="dropdown col-sm-2">
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Filter By
+		</button>
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<button class="dropdown-item" ng-click="$ctrl.setFilterByText(0)">Name</button>
+			<button class="dropdown-item" ng-click="$ctrl.setFilterByText(1)">Phone</button>
+		</div>
+	</div>
+	<div class="col-sm-10">
+		<input type="text" ng-change="$ctrl.filterOnChange(value)" class="form-control input-sm" ng-model="$ctrl.filterText" placeholder="{{$ctrl.filterBy}}" />
+	</div>
+</div>
+
+
+<div>
+	<table>
+		<tr dir-paginate="user in $ctrl.list | itemsPerPage: usersPerPage" total-items="totalUsers" current-page="pagination.current">
+			<td>{{ user.Name }}</td>
+			<!--<td>{{ user.email }}</td>-->
+		</tr>
+	</table>
+
+	<dir-pagination-controls on-page-change="pageChanged(newPageNumber)"></dir-pagination-controls>
+</div>
+
+<hr>
+<div ng-repeat="item in $ctrl.list">
+	{{item|json}}
+	<button ng-click="$ctrl.delete()">Delete</button>
+</div>
+
+
