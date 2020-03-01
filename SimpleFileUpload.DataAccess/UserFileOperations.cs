@@ -1,4 +1,5 @@
 ﻿using SimpleFileUpload.Entity;
+using SimpleFileUpload.Entity.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SimpleFileUpload.DataAccess
 {
-	public class UserFileOperations
+	public class UserFileOperations : IUserFileOperations
 	{
 		private readonly string LogFileFormat = "{datetime}:{name-surname-mobileNo-birthDate-lastLocation}" + Environment.NewLine;
 		private readonly string UserLogFileName = "users.log";

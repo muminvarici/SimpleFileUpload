@@ -1,11 +1,12 @@
 ﻿using OfficeOpenXml;
+using SimpleFileUpload.Entity.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace SimpleFileUpload.Core
 {
-	public class ExcelHelper
+	public class ExcelHelper : IExcelHelper
 	{
 		public List<Dictionary<string, string>> GetData(string path, int sheetNumber = 0)
 		{
@@ -42,7 +43,7 @@ namespace SimpleFileUpload.Core
 			}
 		}
 
-		private static Dictionary<string, string> GetRowData(object[,] sheetData, string[] headers, int rowNumber)
+		private Dictionary<string, string> GetRowData(object[,] sheetData, string[] headers, int rowNumber)
 		{
 			Dictionary<string, string> data = new Dictionary<string, string>();
 			for (int columnNumber = 0; columnNumber < headers.Length; columnNumber++)

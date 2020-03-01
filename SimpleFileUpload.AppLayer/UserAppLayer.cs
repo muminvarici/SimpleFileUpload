@@ -1,7 +1,6 @@
 ﻿using Elasticsearch.Net;
-using SimpleFileUpload.Core;
-using SimpleFileUpload.DataAccess;
 using SimpleFileUpload.Entity;
+using SimpleFileUpload.Entity.Services;
 using SimpleFileUpload.Message;
 using System;
 using System.Collections.Generic;
@@ -13,12 +12,14 @@ namespace SimpleFileUpload.AppLayer
 {
 	public class UserAppLayer
 	{
-		private readonly UserElasticSearch UserRepository;
-		private readonly UserFileOperations UserFileOperations;
+		private readonly IUserElasticSearch UserRepository;
+		private readonly IUserFileOperations UserFileOperations;
+		private readonly IExcelHelper ExcelHelper;
 
-		public UserAppLayer(UserElasticSearch userRepository, UserFileOperations userFileOperations)
+		public UserAppLayer(IUserElasticSearch userRepository, IUserFileOperations userFileOperations, IExcelHelper excelHelper)
 		{
 			UserRepository = userRepository;
+			ExcelHelper = excelHelper;
 			UserFileOperations = userFileOperations;
 		}
 
@@ -54,13 +55,13 @@ namespace SimpleFileUpload.AppLayer
 
 		public void SaveUsers(string path)
 		{
-			var excelData = new ExcelHelper().GetData(path);
+			var excelData = ExcelHelper.GetData(path);
 			var items = ExtractUserListFromExcel(excelData);
 			try
 			{
-				if (!UserRepository.IndexBulk(items, out ServerError error))
+				if (!UserRepository.IndexBulk(items, out object error))
 				{
-					throw new Exception(error.Error.Reason);
+					throw new Exception(((ServerError)error).Error.Reason);
 				}
 				UserFileOperations.SaveAsync(items);
 			}
@@ -68,8 +69,6 @@ namespace SimpleFileUpload.AppLayer
 			{
 				throw;
 			}
-
-
 		}
 
 		/// <summary>

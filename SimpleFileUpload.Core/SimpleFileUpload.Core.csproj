@@ -8,4 +8,8 @@
     <PackageReference Include="EPPlus" Version="4.5.3.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleFileUpload.Entity\SimpleFileUpload.Entity.csproj" />
+  </ItemGroup>
+
 </Project>

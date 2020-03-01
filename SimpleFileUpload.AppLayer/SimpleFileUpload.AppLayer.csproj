@@ -5,8 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleFileUpload.Core\SimpleFileUpload.Core.csproj" />
-    <ProjectReference Include="..\SimpleFileUpload.DataAccess\SimpleFileUpload.DataAccess.csproj" />
+    <PackageReference Include="NEST" Version="7.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SimpleFileUpload.Entity\SimpleFileUpload.Entity.csproj" />
     <ProjectReference Include="..\SimpleFileUpload.Message\SimpleFileUpload.Message.csproj" />
   </ItemGroup>
