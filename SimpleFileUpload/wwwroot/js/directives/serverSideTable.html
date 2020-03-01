@@ -1,31 +1,52 @@
-﻿<!--{{$ctrl.recordCount}}x-->
-
-<nav aria-label="table navigation">
-	<ul class="pagination justify-content-end">
-		<li class="page-item disabled">
-			<a class="page-link" href="#" tabindex="-1">Total Records {{$ctrl.recordCount}}</a>
-		</li>
-		<li class="page-item disabled">
-			<a class="page-link" href="#" tabindex="-1">Previous</a>
-		</li>
-		<li class="page-item"><a class="page-link" href="#">1</a></li>
-		<li class="page-item"><a class="page-link" href="#">2</a></li>
-		<li class="page-item"><a class="page-link" href="#">3</a></li>
-		<li class="page-item">
-			<a class="page-link" href="#">Next</a>
-		</li>
-	</ul>
-</nav>
+﻿<div class="row" style="padding-top:10px">
+	<div class="col-md-2 dropdown">
+		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Page Size {{$ctrl.provider.pageSize}}
+		</button>
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			<button class="dropdown-item" ng-click="$ctrl.changePageSize(5)">5</button>
+			<button class="dropdown-item" ng-click="$ctrl.changePageSize(10)">10</button>
+			<button class="dropdown-item" ng-click="$ctrl.changePageSize(25)">25</button>
+			<button class="dropdown-item" ng-click="$ctrl.changePageSize(50)">50</button>
+		</div>
+	</div>
+	<div class="col-md-10">
+		<nav aria-label="table navigation row">
+			<ul class="pagination justify-content-end">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1">Total Records {{$ctrl.provider.totalRecords}}</a>
+				</li>
+				<li class="page-item" ng-class="{disabled:$ctrl.provider.currentPage<2}">
+					<button class="page-link" href="#" tabindex="-1" ng-click="$ctrl.changePage($ctrl.provider.currentPage-1)">Previous</button>
+				</li>
+				<li class="page-item" ng-show="$ctrl.provider.currentPage>1">
+					<button class="page-link" ng-click="$ctrl.changePage($ctrl.provider.currentPage-1)">
+						{{$ctrl.provider.currentPage-1}}
+					</button>
+				</li>
+				<li class="page-item active"><button class="page-link">{{$ctrl.provider.currentPage}}</button></li>
+				<li class="page-item">
+					<button class="page-link" ng-click="$ctrl.changePage($ctrl.provider.currentPage+1)">
+						{{$ctrl.provider.currentPage+1}}
+					</button>
+				</li>
+				<li class="page-item">
+					<button class="page-link" href="#" ng-click="$ctrl.changePage($ctrl.provider.currentPage+1)">Next</button>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>
 
 <table class="table">
 	<thead>
 		<tr>
-			<th ng-repeat="header in $ctrl.headers" scope="col">{{header}}</th>
+			<th ng-repeat="header in $ctrl.provider.headers" scope="col">{{header}}</th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="item in $ctrl.items">
-			<td ng-repeat="property in $ctrl.properties">
+		<tr ng-repeat="item in $ctrl.provider.list">
+			<td ng-repeat="property in $ctrl.provider.properties">
 				{{item[property]}}
 			</td>
 		</tr>

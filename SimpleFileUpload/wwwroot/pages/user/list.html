@@ -11,16 +11,11 @@
 		</div>
 	</div>
 	<div class="col-sm-10">
-		<input type="text" ng-change="$ctrl.filterOnChange(value)" class="form-control input-sm" ng-model="$ctrl.filterText" placeholder="{{$ctrl.filterBy}}" />
+		<input type="text" ng-change="$ctrl.filterOnChange(value)" class="form-control input-sm" ng-model="$ctrl.listProvider.filterText" placeholder="{{$ctrl.filterBy}}" />
 	</div>
 </div>
 
-
-<server-side-table title="'User List'"
-				   items="$ctrl.list"
-				   headers="$ctrl.headers" 
-				   properties="$ctrl.properties"
-				   recordCount="$ctrl.totalRecords"></server-side-table>
+<server-side-table provider="$ctrl.listProvider"></server-side-table>
 
 <!--<table class="table">
 	<caption>List of users</caption>

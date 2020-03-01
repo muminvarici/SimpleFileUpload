@@ -1,25 +1,32 @@
 ﻿(function () {
 	'use strict';
-	function userList(apiRequestFactory, userElasticSearchFactory) {
-		this.nameEnabled = false;
-		this.filterText;
-		this.list = [];
+	function userList(apiRequestFactory/*, dataTableProvider*/) {
 		this.dropDownValues = [];
-		this.headers = ["Id", "Name", "Surname", "Mobile No", "Birth Date", "Last Location"];
-		this.properties = ["id", "name", "surname", "mobileNo", "birthDate", "lastLocation"];
+
 		this.totalRecords = "0";
 
-		this.loadData = function () {
+		this.listProvider = {};
+		this.listProvider.filterText;
+		this.listProvider.nameEnabled = false;
+		this.listProvider.headers = ["Id", "Name", "Surname", "Mobile No", "Birth Date", "Last Location"];
+		this.listProvider.properties = ["id", "name", "surname", "mobileNo", "birthDate", "lastLocation"];
+		this.listProvider.list = [];
+		this.listProvider.title = "User List";
+		this.listProvider.getData = function (pageNumber, pageSize) {
+			pageNumber = pageNumber || 1;
+			pageSize = pageSize || 10;
 			const filterMethod = this.nameEnabled ? "/user/filterByName" : "/user/filterByPhone";
 			apiRequestFactory.post(filterMethod, {
 				Filter: this.filterText,
-				PageNumber: 1,
-				PageSize: 50
+				PageNumber: pageNumber,
+				PageSize: pageSize
 			}).then(response => {
 				this.list.length = 0;
 				if (!response.data.error && response.data.data) {
 					Array.prototype.push.apply(this.list, response.data.data.items);
 					this.totalRecords = response.data.data.totalRecords;
+					this.currentPage = pageNumber;
+					this.pageSize = pageSize;
 				}
 			}).catch(error => {
 				console.log(error);
@@ -34,19 +41,19 @@
 			//	});
 		};
 		this.setFilterByText = function (isPhone) {
-			this.nameEnabled = !isPhone;
+			this.listProvider.nameEnabled = !isPhone;
 			this.filterBy = !isPhone ? "Name" : "Phone";
 		};
 		this.filterOnChange = function () {
-			this.loadData();
+			this.listProvider.getData(this.listProvider.currentPage, this.listProvider.pageSize);
 		};
 
 		this.setFilterByText();
-		this.loadData(this.list);
+		this.listProvider.getData();
 	}
 
 	angular.module('app').component('userList', {
-		controller: ["apiRequestFactory", "userElasticSearchFactory", userList],
+		controller: ["apiRequestFactory", /*"dataTableProvider",*/ userList],
 		templateUrl: 'pages/user/list.html',
 		//bindings: {
 		//	data: '='
