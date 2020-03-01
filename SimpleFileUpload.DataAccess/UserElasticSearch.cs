@@ -6,7 +6,7 @@ namespace SimpleFileUpload.DataAccess
 {
 	public class UserElasticSearch : ElasticSearchBase<UserModel>
 	{
-		public UserElasticSearch() : base("user_index")
+		public UserElasticSearch(string elasticSearchBaseAddress) : base("user_index", elasticSearchBaseAddress)
 		{
 		}
 

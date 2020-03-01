@@ -11,12 +11,18 @@ using System.Threading.Tasks;
 
 namespace SimpleFileUpload.AppLayer
 {
-	public static class UserAppLayer
+	public class UserAppLayer
 	{
-		private static readonly UserElasticSearch UserRepository = new UserElasticSearch();
-		private static readonly UserFileOperations UserFileOperations = new UserFileOperations();
+		private readonly UserElasticSearch UserRepository;
+		private readonly UserFileOperations UserFileOperations;
 
-		public static BaseResponse FilterByName(UserFilterByNameRequest request)
+		public UserAppLayer(UserElasticSearch userRepository, UserFileOperations userFileOperations)
+		{
+			UserRepository = userRepository;
+			UserFileOperations = userFileOperations;
+		}
+
+		public BaseResponse FilterByName(UserFilterByNameRequest request)
 		{
 			var items = UserRepository.FilterByName(request.PageNumber, request.PageSize, request.Filter, out long totalRecords);
 			return new GridResponse<UserModel>
@@ -31,7 +37,7 @@ namespace SimpleFileUpload.AppLayer
 			};
 		}
 
-		public static BaseResponse FilterByPhone(UserFilterByPhoneRequest request)
+		public BaseResponse FilterByPhone(UserFilterByPhoneRequest request)
 		{
 			var items = UserRepository.FilterByPhone(request.PageNumber, request.PageSize, request.Filter, out long totalRecords);
 			return new GridResponse<UserModel>
@@ -46,7 +52,7 @@ namespace SimpleFileUpload.AppLayer
 			};
 		}
 
-		public static void SaveUsers(string path)
+		public void SaveUsers(string path)
 		{
 			var excelData = new ExcelHelper().GetData(path);
 			var items = ExtractUserListFromExcel(excelData);
@@ -69,7 +75,7 @@ namespace SimpleFileUpload.AppLayer
 		/// <summary>
 		/// This method does it's operation as async by task.
 		/// </summary>
-		private static HashSet<UserModel> ExtractUserListFromExcel(List<Dictionary<string, string>> data)
+		private HashSet<UserModel> ExtractUserListFromExcel(List<Dictionary<string, string>> data)
 		{
 			var items = new HashSet<UserModel>();
 			var taskList = new List<Task>();
@@ -103,7 +109,7 @@ namespace SimpleFileUpload.AppLayer
 			return items;
 		}
 
-		private static UserModel ExtractRow(List<Dictionary<string, string>> data, int index, Dictionary<string, string> item)
+		private UserModel ExtractRow(List<Dictionary<string, string>> data, int index, Dictionary<string, string> item)
 		{
 			return new UserModel
 			{

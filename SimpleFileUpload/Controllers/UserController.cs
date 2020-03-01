@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
 using SimpleFileUpload.AppLayer;
 using SimpleFileUpload.Message;
-using System;
-using System.Threading.Tasks;
 
 namespace SimpleFileUpload.Controllers
 {
 	public class UserController : Controller
 	{
+		private readonly UserAppLayer UserAppLayer;
+		public UserController(UserAppLayer userAppLayer)
+		{
+			UserAppLayer = userAppLayer;
+		}
+
 		public IActionResult Index()
 		{
 			return View();

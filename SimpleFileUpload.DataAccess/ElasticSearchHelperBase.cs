@@ -11,10 +11,10 @@ namespace SimpleFileUpload.DataAccess
 		protected readonly ConnectionSettings ConnectionSettings;
 		protected readonly ElasticClient ElasticClient;
 		protected readonly string IndexName;
-		public ElasticSearchBase(string indexName)
+		public ElasticSearchBase(string indexName, string elasticSearchBaseAddress)
 		{
 			IndexName = indexName;
-			ConnectionSettings = new ConnectionSettings(new Uri("http://localhost:9200/")).DefaultIndex(indexName);
+			ConnectionSettings = new ConnectionSettings(new Uri(elasticSearchBaseAddress)).DefaultIndex(indexName);
 			ElasticClient = new ElasticClient(ConnectionSettings);
 		}
 		//public virtual bool IndexExists()

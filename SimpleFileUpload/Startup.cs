@@ -1,23 +1,35 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
+using SimpleFileUpload.AppLayer;
+using SimpleFileUpload.DataAccess;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SimpleFileUpload
 {
 	public class Startup
 	{
+		private IConfiguration Configuration;
+
+		public Startup(IConfiguration configuration)
+		{
+			Configuration = configuration;
+		}
+
 		// This method gets called by the runtime. Use this method to add services to the container.
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc();
+			services.AddScoped<UserAppLayer>();
+			services.AddScoped<UserElasticSearch>(GetUserElasticSearch);
+			services.AddScoped<UserFileOperations>();
+		}
+
+		private UserElasticSearch GetUserElasticSearch(IServiceProvider arg)
+		{
+			return new UserElasticSearch(Configuration.GetValue<string>("ElasticSearchBaseAddress"));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

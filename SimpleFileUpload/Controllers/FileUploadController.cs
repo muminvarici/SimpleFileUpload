@@ -1,17 +1,18 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using SimpleFileUpload.AppLayer;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace SimpleFileUpload.Controllers
 {
 	public class FileUploadController : Controller
 	{
+		private readonly UserAppLayer UserAppLayer;
+		public FileUploadController(UserAppLayer userAppLayer)
+		{
+			UserAppLayer = userAppLayer;
+		}
 
 		public async Task<IActionResult> UploadAsync()
 		{
