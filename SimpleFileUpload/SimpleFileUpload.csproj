@@ -13,8 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SimpleFileUpload.AppLayer\SimpleFileUpload.AppLayer.csproj" />
-    <ProjectReference Include="..\SimpleFileUpload.Core\SimpleFileUpload.Core.csproj" />
-    <ProjectReference Include="..\SimpleFileUpload.DataAccess\SimpleFileUpload.DataAccess.csproj" />
     <ProjectReference Include="..\SimpleFileUpload.Message\SimpleFileUpload.Message.csproj" />
   </ItemGroup>
 

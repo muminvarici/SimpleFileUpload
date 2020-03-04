@@ -1,11 +1,10 @@
 ﻿using Nest;
 using SimpleFileUpload.Entity;
-using SimpleFileUpload.Entity.Services;
 using System.Collections.Generic;
 
 namespace SimpleFileUpload.DataAccess
 {
-	public class UserElasticSearch : ElasticSearchBase<UserModel>, IUserElasticSearch 
+	public class UserElasticSearch : ElasticSearchBase<UserModel>
 	{
 		public UserElasticSearch(string elasticSearchBaseAddress) : base("user_index", elasticSearchBaseAddress)
 		{

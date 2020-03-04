@@ -1,4 +1,5 @@
-﻿using Nest;
+﻿using Elasticsearch.Net;
+using Nest;
 using SimpleFileUpload.Entity;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace SimpleFileUpload.DataAccess
 			return response.IsValid;
 		}
 
-		public virtual bool IndexBulk(IEnumerable<T> items, out object error)
+		public virtual bool IndexBulk(IEnumerable<T> items, out ServerError error)
 		{
 			var response = ElasticClient.IndexMany(items, IndexName);
 			//var descriptor = new BulkDescriptor();

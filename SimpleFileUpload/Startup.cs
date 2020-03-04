@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SimpleFileUpload.AppLayer;
-using SimpleFileUpload.Core;
 using SimpleFileUpload.DataAccess;
-using SimpleFileUpload.Entity.Services;
 using System;
 
 namespace SimpleFileUpload
@@ -24,10 +22,9 @@ namespace SimpleFileUpload
 		public void ConfigureServices(IServiceCollection services)
 		{
 			services.AddMvc();
-			services.AddSingleton<UserAppLayer>();
-			services.AddSingleton<IUserElasticSearch>(GetUserElasticSearch);
-			services.AddSingleton<IUserFileOperations, UserFileOperations>();
-			services.AddSingleton<IExcelHelper, ExcelHelper>();
+			services.AddScoped<UserAppLayer>();
+			services.AddScoped<UserElasticSearch>(GetUserElasticSearch);
+			services.AddScoped<UserFileOperations>();
 		}
 
 		private UserElasticSearch GetUserElasticSearch(IServiceProvider arg)
